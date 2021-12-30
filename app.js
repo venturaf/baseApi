@@ -1,7 +1,8 @@
 const bodyParser = require('body-parser');
-
+const { StatusCodes } = require("http-status-codes");
+const authMiddleware = require("./middleware/auth/authMiddleware");
 const healthRouter = require('./router/healthRouter');
-const verifyTokenRouter = require('./middleware/auth/verifyTokenMiddleware');
+const authRouter = require('./router/authRouter');
 
 const { PORT } = process.env;
 
@@ -13,9 +14,9 @@ module.exports = (express) => {
     app.use(cors());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-
-    app.use("/health", healthRouter(router));
-    app.use("/auth", verifyTokenRouter(router));
+    
+    app.use("/health", healthRouter(router, authMiddleware, StatusCodes));
+    app.use("/auth", authRouter(router, authMiddleware, StatusCodes));
 
     app.listen(PORT, () => {
         console.log(`server running at http://localhost:${PORT}`)
