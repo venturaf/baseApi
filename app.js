@@ -16,7 +16,7 @@ module.exports = (express,cookieParser,logger) => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     
-    app.use("/", indexRouter(router));
+    app.use("/", indexRouter(router, StatusCodes));
     app.use("/health", healthRouter(router, authMiddleware, StatusCodes));
     app.use("/auth", authRouter(router, authMiddleware, StatusCodes));
 
