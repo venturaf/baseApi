@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+module.exports = (router, auth, StatusCodes) => {
+  
+  router.get('/', function(req, res) {
+          res.status(StatusCodes.OK).json(" Welcome 🙌 Basic Api 🙌")
+      });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Basic Api' });
-});
-
-module.exports = router;
+      return router;
+  }
