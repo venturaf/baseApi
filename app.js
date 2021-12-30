@@ -7,7 +7,7 @@ const authRouter = require('./router/authRouter');
 
 const { PORT } = process.env;
 
-module.exports = (express) => {
+module.exports = (express,cookieParser,logger) => {
     const app = express();
     const router = express.Router();
     const cors = require('cors');
@@ -16,7 +16,7 @@ module.exports = (express) => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     
-    app.use("/", indexRouter());
+    app.use("/", indexRouter(router, authMiddleware, StatusCodes));
     app.use("/health", healthRouter(router, authMiddleware, StatusCodes));
     app.use("/auth", authRouter(router, authMiddleware, StatusCodes));
 
