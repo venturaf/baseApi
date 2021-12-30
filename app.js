@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const { StatusCodes } = require("http-status-codes");
 const authMiddleware = require("./middleware/auth/authMiddleware");
+const indexRouter = require('./router/indexRouter');
 const healthRouter = require('./router/healthRouter');
 const authRouter = require('./router/authRouter');
 
@@ -15,6 +16,7 @@ module.exports = (express) => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     
+    app.use("/", indexRouter());
     app.use("/health", healthRouter(router, authMiddleware, StatusCodes));
     app.use("/auth", authRouter(router, authMiddleware, StatusCodes));
 
